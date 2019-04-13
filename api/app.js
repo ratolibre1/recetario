@@ -6,11 +6,10 @@ var bodyParser = require('body-parser');
 var app = express();
 
 //Cargar rutas
-/*var user_routes = require('./routes/user');
-var artist_routes = require('./routes/artist');
-var album_routes = require('./routes/album');
-var song_routes = require('./routes/song');
-*/
+var user_routes = require('./routes/route-user');
+var ingredient_routes = require('./routes/route-ingredient');
+var category_routes = require('./routes/route-category');
+var recipe_routes = require('./routes/route-recipe');
 
 //Configurar BodyParser
 app.use(bodyParser.urlencoded({extended:false}));
@@ -27,10 +26,10 @@ app.use((req, res, next) => {
 });
 
 //Rutas base
-/*app.use('/api', user_routes);
-app.use('/api', artist_routes);
-app.use('/api', album_routes);
-app.use('/api', song_routes);*/
+app.use('/api', user_routes);
+app.use('/api', ingredient_routes);
+app.use('/api', category_routes);
+app.use('/api', recipe_routes);
 
 app.get('/prueba', function(req, res){
 	res.status(200).send({message: 'TODO OK'});
