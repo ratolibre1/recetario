@@ -135,7 +135,7 @@ function uploadImage(req, res) {
 }
 
 function getImage(req, res){
-	var imageFile = req.params.imageFile;
+	var imageFile = req.params.image;
 	var pathFile = './uploads/ingredients/' + imageFile;
 
 	fs.exists(pathFile, function(exists){

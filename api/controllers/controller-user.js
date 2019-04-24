@@ -8,6 +8,7 @@ var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/model-user');
 var jwt = require('../services/jwt');
 
+//TODO: NO COMPARTIR CLAVE
 function getUser(req, res){
 	var userId = req.params.id;
 
@@ -24,6 +25,7 @@ function getUser(req, res){
 	});
 }
 
+//TODO: NO COMPARTIR CLAVES
 function getUsers(req, res){
 	if(req.params.page){
 		var page = req.params.page;
@@ -57,8 +59,9 @@ function saveUser(req, res) {
 	user.surname = params.surname;
 	user.desc = params.desc;
 	user.email = params.email;
-	user.role = 'ROLE_USER';
-	//user.role = 'ROLE_ADMIN';
+	user.role = 'ROLE_READER';
+	//user.role = 'ROLE_CHEF';
+	//user.role = 'ROLE_CURATOR';
 	user.image = 'null';
 	
 	if(params.password){
@@ -129,6 +132,11 @@ function updateUser(req, res){
 		return res.status(500).send({message: 'No tienes permiso para actualizar este usuario'});
 	}
 
+	if(update.password){
+		//Encriptar contraseña
+		update.password = bcrypt.hashSync(update.password, null, null);
+	}
+
 	User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
 		if(err){
 			res.status(500).send({message: 'Error al actualizar el usuario'});
@@ -176,7 +184,7 @@ function uploadImage(req, res) {
 }
 
 function getImage(req, res){
-	var imageFile = req.params.imageFile;
+	var imageFile = req.params.image;
 	var pathFile = './uploads/users/' + imageFile;
 
 	fs.exists(pathFile, function(exists){

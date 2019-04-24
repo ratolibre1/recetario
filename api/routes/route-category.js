@@ -15,6 +15,6 @@ api.post('/category', md_auth.ensureAuth, CategoryController.saveCategory);
 api.put('/category/:id', md_auth.ensureAuth, CategoryController.updateCategory);
 api.delete('/category/:id', md_auth.ensureAuth, CategoryController.deleteCategory);
 api.post('/upload-category-image/:id', [md_auth.ensureAuth, md_upload], CategoryController.uploadImage);
-api.get('/get-category-image/:file', CategoryController.getImage);
+api.get('/get-category-image/:image', CategoryController.getImage);
 
 module.exports = api;
