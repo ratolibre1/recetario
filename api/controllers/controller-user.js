@@ -34,7 +34,7 @@ function getUsers(req, res){
 	}	
 	var itemsPerPage = 4;
 
-	User.find().sort('name').paginate(page, itemsPerPage, function(err, users, total){
+	User.find({}, {password: 0}).sort('name').paginate(page, itemsPerPage, function(err, users, total){
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		} else {

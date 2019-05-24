@@ -1,0 +1,9 @@
+<div class="container" style="padding-top: 15px;">
+	<div class="jumbotron">
+		<h1>Bienvenido al Recetario</h1>
+		<p>Acá podrás ver recetas, ordenar por ingredientes, categoría, o autor. Si te logueas, también podrás subir tus propias recetas.</p>
+		<p *ngIf="identity"><a [routerLink] = "['/login']" class="btn btn-primary btn-lg" role="button">No hago nada, ya estás logueado</a></p>
+		<p *ngIf="!identity"><a [routerLink] = "['/login']" class="btn btn-primary btn-lg" role="button">Login</a></p>
+		<p *ngIf="!identity"><a [routerLink] = "['/register']" class="btn btn-primary btn-lg" role="button">Registrate!</a></p>
+	</div>
+</div>

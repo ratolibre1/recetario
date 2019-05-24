@@ -1,3 +1,16 @@
-<h1>
-  {{title}}
-</h1>
+<div class="row">
+	<div class="content col-10">
+		<router-outlet></router-outlet>
+	</div>
+    <div class="navigation col-2">
+		<h3>
+			<a [routerLink] = "['/']">
+				{{title}}
+			</a>
+		</h3>
+		<div name="saludo" *ngIf="user.name">
+			Hola, {{user.name}}
+		</div>
+		<p *ngIf="identity"><a (click)="logout()" class="btn btn-primary btn-lg" role="button">Cerrar Sesión</a></p>
+	</div>
+</div>

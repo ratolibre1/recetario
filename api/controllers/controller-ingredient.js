@@ -26,11 +26,10 @@ function getIngredients(req, res){
 	if(req.params.page){
 		var page = req.params.page;
 	} else {
-		var page = 1;
-	}	
-	var itemsPerPage = 4;
+		var page = "a";
+	}
 
-	Ingredient.find().sort('name').paginate(page, itemsPerPage, function(err, ingredients, total){
+	Ingredient.find({"name" : {$regex: "^"+page, $options:"i"}}, function(err, ingredients, total){
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		} else {

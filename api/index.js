@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/dbRecetario', (err, res) => {
 		console.log("La base de datos está corriendo correctamente...");
 
 		app.listen(port, function(){
-			console.log("Servidor del API Rest de musica escuchando en http://localhost:" + port);
+			console.log("Servidor del API Rest de Recetario escuchando en http://localhost:" + port);
 		})
 	}
 });

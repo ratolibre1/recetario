@@ -1,0 +1,50 @@
+<div class="head-page" *ngIf="identity">
+	<h1>{{titulo}}</h1>
+	<a [routerLink]="['/crear-ingrediente']" *ngIf="identity && identity.role == 'ROLE_CURATOR'" class="btn btn-primary">
+		Añadir Ingrediente
+	</a>
+
+	<nav>
+		<ul class="pagination">
+			<li class="page-item disabled">
+				<a class="page-link" [routerLink]="['/ingredients/', prev_page]" tabindex="-1">Primera (no)</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" [routerLink]="['/ingredients/', prev_page]">1 (no)</a>
+			</li>
+			<li class="page-item active">
+				<a class="page-link" [routerLink]="['/ingredients/', prev_page]">2 (no)</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" [routerLink]="['/ingredients/', prev_page]">3 (no)</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" [routerLink]="['/ingredients/', next_page]">Última (no)</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+<div class="clearfix"></div>
+<ul class="ingredients-list" *ngIf="identity">
+	<li *ngFor="let ingredient of ingredients" class="col-lg-3 ingredient-item">
+		<div class="ingredient-image">
+			<img src="{{url + 'get-ingredient-image/' + ingredient.image}}" />
+		</div>
+		<div class="ingredient-name">
+			<a [routerLink]="['/ingrediente/', ingredient._id]">
+				{{ingredient.name}}
+			</a>
+
+			<div class="buttons" *ngIf="identity.role == 'ROLE_CURATOR'">
+				<a [routerLink]="['/editar-ingrediente/', ingredient._id]" class="btn btn-sm btn-warning">Editar</a>
+				<a (click)="onDeleteConfirm(ingredient._id)" class="btn btn-sm btn-danger">Borrar</a>
+			</div>
+
+			<div class="seguro" *ngIf="confirmado == ingredient._id">
+				<a (click)="onDeleteIngredient(ingredient._id)" class="btn btn-sm btn-danger">Eliminar</a>
+				<a (click)="onCancelIngredient()" class="btn btn-sm btn-primary">Cancelar</a>
+			</div>
+		</div>
+	</li>
+</ul>
