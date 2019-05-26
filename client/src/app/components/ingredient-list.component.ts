@@ -18,6 +18,8 @@ export class IngredientListComponent implements OnInit{
 	public identity;
 	public token;
 	public url: string;
+	public alphabet: String[];
+	public currentPage: string;
 
 	constructor(
 		private _route: ActivatedRoute,
@@ -29,6 +31,7 @@ export class IngredientListComponent implements OnInit{
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.url = GLOBAL.url;
+		this.alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 	}
 
 	ngOnInit(){
@@ -36,15 +39,17 @@ export class IngredientListComponent implements OnInit{
 
 		//Conseguir listado de ingredientes
 		this.getIngredients();
+
+		this.getAlphabet();
 	}
 
 	getIngredients(){
 		this._route.params.forEach((params: Params) => {
-			let page = params['page'];
-			if(!page){
-				page = "a";
+			this.currentPage = params['page'];
+			if(!this.currentPage){
+				this.currentPage = "a";
 			} else {
-				this._ingredientService.getIngredients(this.token, page).subscribe(
+				this._ingredientService.getIngredients(this.token, this.currentPage).subscribe(
 					response => {
 						if(!response.ingredients){
 							this._router.navigate(['/']);
@@ -62,6 +67,28 @@ export class IngredientListComponent implements OnInit{
 						}
 					});
 			}
+		});
+	}
+
+	getAlphabet(){
+		this._route.params.forEach((params: Params) => {
+			this._ingredientService.getIngredientAlphabet(this.token).subscribe(
+				response => {
+					if(!response.alphabet){
+						this._router.navigate(['/']);
+					} else {
+						this.alphabet = response.alphabet;
+					}
+				},
+				error => {
+					var errorMessage = <any>error;
+					
+					if(errorMessage != null){
+						var body = JSON.parse(error._body);
+						//this.alertMessage = body.message;
+						console.log(error);
+					}
+				});
 		});
 	}
 

@@ -23,6 +23,16 @@ export class IngredientService{
 		return this._http.get(this.url+'ingredients/'+page, options).map(res => res.json());	
 	}
 
+	getIngredientAlphabet(token){
+		let headers = new Headers({
+			'Content-Type': 'application/json',
+			'Authorization': token
+		});
+
+		let options = new RequestOptions({headers: headers});
+		return this._http.get(this.url+'ingredient-alphabet/', options).map(res => res.json());	
+	}
+
 	getIngredient(token, id: string){
 		let headers = new Headers({
 			'Content-Type': 'application/json',

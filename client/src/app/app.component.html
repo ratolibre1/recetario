@@ -12,5 +12,10 @@
 			Hola, {{user.name}}
 		</div>
 		<p *ngIf="identity"><a (click)="logout()" class="btn btn-primary btn-lg" role="button">Cerrar Sesión</a></p>
+
+		<!--<button type="button" class="btn btn-success">Success</button>-->
+		<a [routerLink] = "['/ingredients', 'a']" class="btn btn-success">
+			Buscar por Ingrediente
+		</a>
 	</div>
 </div>

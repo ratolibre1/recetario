@@ -29,7 +29,7 @@ function getIngredients(req, res){
 		var page = "a";
 	}
 
-	Ingredient.find({"name" : {$regex: "^"+page, $options:"i"}}, function(err, ingredients, total){
+	Ingredient.find({"name" : {$regex: "^"+page, $options:"i"}}, function(err, ingredients){
 		if(err){
 			res.status(500).send({message: 'Error en la petición'});
 		} else {
@@ -37,8 +37,29 @@ function getIngredients(req, res){
 				res.status(404).send({message: 'No hay ingredientes'});
 			} else {
 				return res.status(200).send({
-					total: total,
 					ingredients: ingredients
+				});
+			}
+		}
+	});
+}
+function getIngredientAlphabet(req, res){
+	Ingredient.find({}, {name : 1}, function(err, ingredients){
+		if(err){
+			res.status(500).send({message: 'Error en la petición'});
+		} else {
+			if(!ingredients){
+				res.status(404).send({message: 'No hay ingredientes'});
+			} else {
+				let alphabet = [];
+				for (let ing of ingredients){
+					if (alphabet.indexOf(ing.name.charAt(0).toLowerCase()) == -1){
+						alphabet.push(ing.name.charAt(0).toLowerCase());
+					}
+				}
+				alphabet.sort();
+				return res.status(200).send({
+					alphabet: alphabet
 				});
 			}
 		}
@@ -149,6 +170,7 @@ function getImage(req, res){
 module.exports = {
 	getIngredient,
 	getIngredients,
+	getIngredientAlphabet,
 	saveIngredient,
 	updateIngredient,
 	deleteIngredient,

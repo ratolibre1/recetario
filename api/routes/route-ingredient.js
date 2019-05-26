@@ -11,6 +11,7 @@ var md_upload = multipart({uploadDir: './uploads/ingredients'});
 
 api.get('/ingredient/:id', IngredientController.getIngredient);
 api.get('/ingredients/:page', IngredientController.getIngredients);
+api.get('/ingredient-alphabet', IngredientController.getIngredientAlphabet);
 api.post('/ingredient', md_auth.ensureAuth, IngredientController.saveIngredient);
 api.put('/ingredient/:id', md_auth.ensureAuth, IngredientController.updateIngredient);
 api.delete('/ingredient/:id', md_auth.ensureAuth, IngredientController.deleteIngredient);
